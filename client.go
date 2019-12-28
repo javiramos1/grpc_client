@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/javiramos1/grpcapi/grpcsvc"
+	"github.com/javiramos1/grpcapi"
 	"google.golang.org/grpc"
 )
 
@@ -32,19 +32,19 @@ func main() {
 	}
 	defer cc.Close()
 
-	c := grpcsvc.NewGreetServiceClient(cc)
+	c := grpcapi.NewGrpcServiceClient(cc)
 	fmt.Printf("Created client: %f", c)
 
 	callService(c)
 
 }
 
-func callService(c grpcsvc.GrpcServiceClient) {
+func callService(c grpcapi.GrpcServiceClient) {
 	fmt.Println("callService...")
-	req := &grpcsvc.GrpcRequest{
-		Input : "test"
+	req := &grpcapi.GrpcRequest{
+		Input: "test",
 	}
-	res, err := c.Greet(context.Background(), req)
+	res, err := c.GrpcService(context.Background(), req)
 	if err != nil {
 		log.Fatalf("error while calling gRPC: %v", err)
 	}
